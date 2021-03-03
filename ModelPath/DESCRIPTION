@@ -1,0 +1,11 @@
+Package: ModelPath
+Type: Package
+Title: Model Path Selection
+Version: 0.1.0
+Author: Nicholas Kissel, Lucas Mentch
+Maintainer: Nicholas Kissel <nkissel@andrew.cmu.edu>
+Description: Desc empty; NOTE: no imports or suggests; load desired modeling function 
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1

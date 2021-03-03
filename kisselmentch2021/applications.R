@@ -3,7 +3,7 @@
 ################################################################################
 library(lars)
 library(ggplot2)
-source("../R/myPackage.R")
+source("myfunctions.R")
 
 data(diabetes)
 xnm <- colnames(diabetes$x)
@@ -21,7 +21,6 @@ for(i in seq_along(nm)) {
 		which2 <- which(nm[[i]] == "2")
 		colnames(newd_2)[i] <- paste0(xnm[which2], "_", xnm[which2])
 	}
-	# newd_2[,i] <- (newd_2[,i] - mean(newd_2[,i]))/sd(newd_2[,i])
 }
 newd_2 <- newd_2[, which(colnames(newd_2) != "sex_sex")]
 final_d <- cbind(newd_2, data.frame(y = diabetes$y))
