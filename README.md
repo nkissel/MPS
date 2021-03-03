@@ -1,2 +1,2 @@
 # MPS
- Code for Forward Stability and Model Path Selection paper.
+ Code for "Forward Stability and Model Path Selection" paper.
