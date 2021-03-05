@@ -467,14 +467,14 @@ mps_cvc_func <- function(x, y, ntrue, p) {
 			my_ols.models_1[,1:(i-1)] <- rep(picked_mods[[j]], each = length(a_vars_inds))
 			my_ols.models_1[,i] <- a_vars_inds
 			my_ols.models_1 <- split(t(my_ols.models_1), rep(1:nrow(my_ols.models_1), each = ncol(my_ols.models_1)))
-			mycvc_temp <- CVC(x, as.matrix(y), type = "ols", ols.models = my_ols.models_1, n.fold = 10, B = 100)
+			mycvc_temp <- CVC(x, as.matrix(y), type = "ols", ols.models = my_ols.models_1, n.fold = as.numeric(args[9]), B = 100)
 			picked_temp <- which(mycvc_temp$p.vals.c > 0.05)
 			sel_mods <- c(sel_mods, my_ols.models_1[picked_temp])
 			names(sel_mods) <- NULL
 		}
 		if(i == 1) {
 			my_ols.models_1 <- as.list(1:p)
-			mycvc_temp <- CVC(x, as.matrix(y), type = "ols", ols.models = my_ols.models_1, n.fold = 10, B = 100)
+			mycvc_temp <- CVC(x, as.matrix(y), type = "ols", ols.models = my_ols.models_1, n.fold = as.numeric(args[9]), B = 100)
 			picked_temp <- which(mycvc_temp$p.vals.c > 0.05)
 			sel_mods <- c(sel_mods, my_ols.models_1[picked_temp])
 			names(sel_mods) <- NULL
@@ -630,7 +630,7 @@ distributed_func <- function(){
 		mymat <- combn(1:p, ntrue)
 		my_ols.models <- split(mymat, rep(1:ncol(mymat), each = nrow(mymat)))
 		pt <- proc.time()
-		mycvc <- CVC(n1, as.matrix(y), type = "ols", ols.models = my_ols.models, n.fold = 10, B = 100)
+		mycvc <- CVC(n1, as.matrix(y), type = "ols", ols.models = my_ols.models, n.fold = as.numeric(args[9]), B = 100)
 		cvc_time <- proc.time() - pt
 		full_cvc_res <- matrix(paste0("x", do.call(rbind, my_ols.models[which(mycvc$p.vals.c > 0.05)])), ncol = ntrue)
 

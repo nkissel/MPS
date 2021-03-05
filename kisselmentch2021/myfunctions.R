@@ -536,9 +536,14 @@ find_worstcases_chen86 <- function(r, k, P) {
 #' @param P desired inclusion probability
 #' @examples find_worstcases_chen86(100. 5, 0.80)
 wc_updater_finder <- function(r, k, P) {
-  mypath <- "~/mps/speed_test/worst_case_table.Rds"
+  mypath <- "worst_case_table.Rds"
+  # mypath <- "~/mps/speed_test/worst_case_table.Rds"
+  worst_cases <- tryCatch(readRDS(mypath), error=function(cond){""}, warning=function(cond){""})
   # mypath <- "/ihome/lmentch/nkissel/mps/speed_test/worst_case_table.Rds"
-  worst_cases <- readRDS(mypath)
+  if(is.null(dim(worst_cases))) {
+    worst_cases <- data.frame(matrix(nrow = 0, ncol = 4))
+    colnames(worst_cases) <- c("r", "k", "P", "r_prime")
+  }
   where <- (worst_cases$r %in% r) & (worst_cases$k %in% k) & (worst_cases$P %in% P)
   is_in <- sum(where)
   
@@ -551,7 +556,7 @@ wc_updater_finder <- function(r, k, P) {
     worst_cases[curr_rows + 1, 2] <- k
     worst_cases[curr_rows + 1, 3] <- P
     worst_cases[curr_rows + 1, 4] <- t$r_prime
-    saveRDS(worst_cases, file = "~/mps/speed_test/worst_case_table.Rds", version = 2)
+    saveRDS(worst_cases, file = "worst_case_table.Rds")
     return(list(r_prime = t$r_prime, P = P))
   }
 }

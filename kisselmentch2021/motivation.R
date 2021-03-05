@@ -42,9 +42,9 @@ for(i in 1:B) {
   ss_mat_ls[i, ] <- loc_add
   ss_mat[i, ] <- names(coef(mystep)[-1])
 }
-colnames(ss_mat_ls) <- var_names
 
 var_names <- names(train[,1:p])
+colnames(ss_mat_ls) <- var_names
 var_counts <- matrix(0, ncol = p, nrow = p)
 for(i in 1:p) {
   tb <- table(ss_mat[,1:i])
