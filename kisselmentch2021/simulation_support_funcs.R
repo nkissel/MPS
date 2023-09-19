@@ -333,7 +333,7 @@ CVC <- function(X, Y, type = "stepwise", max.steps=NULL, lambda=NULL, nlambda=NU
               beta.1 = cv.res$beta[,,1], beta = cv.res$beta))
 }
 
-mps_cvc_func <- function(x, y, ntrue, p) {
+mps_cvc_func <- function(x, y, ntrue, p, n.fold = 5, B = 100) {
   picked_mods <- list()
   for(i in 1:ntrue) {
     sel_mods <- list()
@@ -343,14 +343,14 @@ mps_cvc_func <- function(x, y, ntrue, p) {
       my_ols.models_1[,1:(i-1)] <- rep(picked_mods[[j]], each = length(a_vars_inds))
       my_ols.models_1[,i] <- a_vars_inds
       my_ols.models_1 <- split(t(my_ols.models_1), rep(1:nrow(my_ols.models_1), each = ncol(my_ols.models_1)))
-      mycvc_temp <- CVC(x, as.matrix(y), type = "ols", ols.models = my_ols.models_1, n.fold = as.numeric(args[9]), B = 100)
+      mycvc_temp <- CVC(x, as.matrix(y), type = "ols", ols.models = my_ols.models_1, n.fold = n.fold, B = B)
       picked_temp <- which(mycvc_temp$p.vals.c > 0.05)
       sel_mods <- c(sel_mods, my_ols.models_1[picked_temp])
       names(sel_mods) <- NULL
     }
     if(i == 1) {
       my_ols.models_1 <- as.list(1:p)
-      mycvc_temp <- CVC(x, as.matrix(y), type = "ols", ols.models = my_ols.models_1, n.fold = as.numeric(args[9]), B = 100)
+      mycvc_temp <- CVC(x, as.matrix(y), type = "ols", ols.models = my_ols.models_1, n.fold = n.fold, B = B)
       picked_temp <- which(mycvc_temp$p.vals.c > 0.05)
       sel_mods <- c(sel_mods, my_ols.models_1[picked_temp])
       names(sel_mods) <- NULL

@@ -8,7 +8,7 @@ library(MASS)
 source('simulation_support_funcs.R')
 
 run1iter <- function(B = 100, p = 10, n = 100, r = 200, SNR = 4, rho = 0,
-                     Pstar = 0.95, beta_type = 1, do_cvc = F){
+                     Pstar = 0.95, beta_type = 1, do_cvc = F, n.fold = 5, mpsB = 100){
   
   lasso_vars<-tfmat1<-fs_vars<-ssfs_vars<-tfmat4<-tfmat5<-NA
   
@@ -98,12 +98,12 @@ run1iter <- function(B = 100, p = 10, n = 100, r = 200, SNR = 4, rho = 0,
     mymat <- combn(1:p, ntrue)
     my_ols.models <- split(mymat, rep(1:ncol(mymat), each = nrow(mymat)))
     pt <- proc.time()
-    mycvc <- CVC(n1, as.matrix(y), type = "ols", ols.models = my_ols.models, n.fold = as.numeric(args[9]), B = 100)
+    mycvc <- CVC(n1, as.matrix(y), type = "ols", ols.models = my_ols.models, n.fold = n.fold, B = mpsB)
     cvc_time <- proc.time() - pt
     full_cvc_res <- matrix(paste0("x", do.call(rbind, my_ols.models[which(mycvc$p.vals.c > 0.05)])), ncol = ntrue)
     
     pt <- proc.time()
-    picked_mods_ls <- mps_cvc_func(n1, as.matrix(y), ntrue, p)
+    picked_mods_ls <- mps_cvc_func(n1, as.matrix(y), ntrue, p, n.fold = n.fold, B = mpsB)
     mps_cvc_time <- proc.time() - pt
     mps_cvc_res <- matrix(paste0("x", do.call(rbind, picked_mods_ls)), ncol = ntrue)
   }
@@ -184,7 +184,7 @@ run1iter <- function(B = 100, p = 10, n = 100, r = 200, SNR = 4, rho = 0,
               cvc_time = cvc_time, mps_time = mps_time, mps_cvc_time = mps_cvc_time))
 }
 
-results1 <- run1iter()
+results1 <- run1iter(do_cvc = T)
 
 # to obtain RTEs as done in our paper, here is an example
 get_rte <- function(x) {
