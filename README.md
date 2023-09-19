@@ -8,7 +8,7 @@ The "ModelPath" folder can be installed as an R package. It provides tools for p
 
 # Getting started
 For an example of how to use MPS
-`
+```
 library(MASS)
 n<-1000
 p<-10
@@ -27,4 +27,4 @@ mps2<-full.select.gen(myframe=mydata,resp.name='y',depth=3,
    r=100,model='lm',condense=TRUE)
 mps2
 build.tree(mps2) #graph
-`
+```
