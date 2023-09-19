@@ -17,5 +17,5 @@ find_worstcases_chen86(r, k, P)
 Function that that finds the set likely to contain the most probable multinomial category
 }
 \examples{
-find_worstcases_chen86(100. 5, 0.80)
+find_worstcases_chen86(100, 5, 0.80)
 }

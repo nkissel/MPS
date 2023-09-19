@@ -47,6 +47,6 @@ signal<-rowSums(x[,1:3])
 noise<-rnorm(n,0,1/4)
 y<-signal+noise
 mydata<-data.frame(x,y)
-boot.select.gen(resp.name='y',c.vars=NULL,myframe=mydata,B=100,model='lm')
+boot.select.gen(resp.name='y',c.vars=NULL,myframe=mydata,r=100,model='lm')
 }
 \keyword{matrix}

@@ -9,7 +9,7 @@ full.select.gen(
   resp.name,
   depth,
   r,
-  Pstar,
+  Pstar = 0.95,
   f,
   type,
   model,
@@ -55,7 +55,7 @@ noise<-rnorm(n,0,1/4)
 y<-signal+noise
 mydata<-data.frame(x,y)
 mps1<-full.select.gen(myframe=mydata,resp.name='y',depth=3,
-   B=100,model='lm',condense=FALSE)
+   r=100,model='lm',condense=FALSE)
 mps1
 build.tree(mps1) #graph
 

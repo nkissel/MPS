@@ -1,13 +1,14 @@
-# imports: none!
-# suggests: whatever function/package you use to form models
-# can include an error statement!
+# imports stats graphics
+
+#' @importFrom stats as.formula na.omit
+#' @importFrom graphics lines par rect segments strheight strwidth text
 
 ######################################################################################################
 # Read Tree Label, likely only has use for build.tree function
 ######################################################################################################
-#' Tree Processing Function
+#' @title Tree Processing Function
 #'
-#' This is an internal function used for building MPS graph.
+#' @description This is an internal function used for building MPS graph.
 #' @param var.mat.na matrix of MPS data
 #' @keywords matrix
 #' @export
@@ -95,9 +96,9 @@ read.tree.label<-function(var.mat.na){
 ###################################  Build Tree Graphics Function  ###################################
 ######################################################################################################
 ######################################################################################################
-#' Tree Graphic Function
+#' @title Tree Graphic Function
 #'
-#' Builds MPS graphic in graphics window
+#' @description Builds MPS graphic in graphics window
 #' @param var.mat.na matrix of MPS data
 #' @param cex text size
 #' @param alt integer that vertically staggers terminal nodes (max of 3)
@@ -422,7 +423,7 @@ naRemover<-function(myMat){
 #' noise<-rnorm(n,0,1/4)
 #' y<-signal+noise
 #' mydata<-data.frame(x,y)
-#' boot.select.gen(resp.name='y',c.vars=NULL,myframe=mydata,B=100,model='lm')
+#' boot.select.gen(resp.name='y',c.vars=NULL,myframe=mydata,r=100,model='lm')
 #' @export
 boot.select.gen<-function(resp.name,c.vars,myframe,type,r,f,model,fun.args,pred.args){#c.vars are chosen, a.vars are available
 	if(missing(resp.name)) stop("Need response variable name")
@@ -489,7 +490,8 @@ f<-function(y,y.pred){return(mean((y-y.pred)^2))} #mean squared error
 #' @param r maximum cell count
 #' @param k number of cells
 #' @param P desired inclusion probability
-#' @examples find_worstcases_chen86(100. 5, 0.80)
+#' @examples find_worstcases_chen86(100, 5, 0.80)
+#' @export
 find_worstcases_chen86 <- function(r, k, P) {
 	N <- r * k
 	nsim <- 1e4
@@ -498,7 +500,7 @@ find_worstcases_chen86 <- function(r, k, P) {
 	probs <- rep(1/k, k)
 	selected <- matrix(nrow = nsim, ncol = k)
 	f <- function(filler, N, probs) {
-		temp <- rmultinom(N * 1.1, 1, probs)
+		temp <- stats::rmultinom(N * 1.1, 1, probs)
 		applied_temp <- apply(temp, 1, cumsum)
 		found <- function(vect) {
 			which(vect == r)
@@ -535,7 +537,7 @@ find_worstcases_chen86 <- function(r, k, P) {
 #' @param r maximum cell count
 #' @param k number of cells
 #' @param P desired inclusion probability
-#' @examples find_worstcases_chen86(100. 5, 0.80)
+#' @examples find_worstcases_chen86(100, 5, 0.80)
 wc_updater_finder <- function(r, k, P) {
 	mypath <- "~/mps/speed_test/worst_case_table.Rds"
 	# mypath <- "/ihome/lmentch/nkissel/mps/speed_test/worst_case_table.Rds"
@@ -587,7 +589,7 @@ wc_updater_finder <- function(r, k, P) {
 #' y<-signal+noise
 #' mydata<-data.frame(x,y)
 #' mps1<-full.select.gen(myframe=mydata,resp.name='y',depth=3,
-#'    B=100,model='lm',condense=FALSE)
+#'    r=100,model='lm',condense=FALSE)
 #' mps1
 #' build.tree(mps1) #graph
 #'
@@ -597,7 +599,7 @@ wc_updater_finder <- function(r, k, P) {
 #' mps2
 #' build.tree(mps2) #graph
 #' @export
-full.select.gen<-function(myframe,resp.name,depth,r,Pstar,f,type,model,fun.args,pred.args,condense=FALSE){
+full.select.gen<-function(myframe,resp.name,depth,r,Pstar=0.95,f,type,model,fun.args,pred.args,condense=FALSE){
 	####################################### input info and stops #######################################
 	if(missing(depth)) depth<-3
 	if(missing(myframe)) stop("Need data.frame")
