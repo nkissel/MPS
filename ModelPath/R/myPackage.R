@@ -559,6 +559,11 @@ wc_updater_finder <- function(r, k, P, save.table = F, table.path = NULL) {
 	} else {
 		isin <- 0
 	}
+	if(!exists(worst_cases)) {
+		worst_cases <- data.frame(matrix(ncol = 4, nrow = 0))
+		colnames(worst_cases) <- c('r','k','P','r_prime')
+	}
+
 
 	if(is_in == 1) {
 		return(list(r_prime = worst_cases$r_prime[where], P = P))
