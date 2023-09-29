@@ -670,7 +670,7 @@ full.select.gen<-function(myframe,resp.name,depth,r,Pstar=0.95,f,type,model,
 				var2.list.all<-names(select2)
 				var2.c.list <- select2
 				p <- length(select2)
-				worst_case <- wc_updater_finder(r, p, desir_prob)
+				worst_case <- wc_updater_finder(r, p, desir_prob,save.table=save.table, table.path=table.path)
 				# worst_case <- find_worstcases_chen86(r, p, desir_prob)
 				r_prime <- worst_case$r_prime
 				var2.list <- var2.list.all[which(select2 >= r_prime )]
