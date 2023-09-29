@@ -538,12 +538,17 @@ find_worstcases_chen86 <- function(r, k, P) {
 #' @param k number of cells
 #' @param P desired inclusion probability
 #' @param save.table whether you want to save a table for faster computation
+#' @param table.path where table gets saved; only matters if `save.table=T`
 #' @examples find_worstcases_chen86(100, 5, 0.80)
-wc_updater_finder <- function(r, k, P, save.table = F) {
+wc_updater_finder <- function(r, k, P, save.table = F, table.path = NULL) {
 	# mypath <- "~/mps/speed_test/worst_case_table.Rds"
 	# mypath <- "/ihome/lmentch/nkissel/mps/speed_test/worst_case_table.Rds"
 	if(save.table) {
-		mypath <- paste0(getwd(), '/', 'worst_case_table.Rds')
+		if(is.null(table.path)) {
+			mypath <- paste0(getwd(), '/', 'worst_case_table.Rds')
+		} else {
+			mypath <- paste0(table.path, '/', 'worst_case_table.Rds')
+		}
 		if(exists(mypath)) {
 			worst_cases <- readRDS(mypath)
 			where <- (worst_cases$r %in% r) & (worst_cases$k %in% k) & (worst_cases$P %in% P)
@@ -586,6 +591,10 @@ wc_updater_finder <- function(r, k, P, save.table = F) {
 #' @param fun.args list of arguments that are passed to modeling function
 #' @param pred.args list of arguments that are passed to model predict function
 #' @param condense logical for whether or not paths should be merged
+#' @param save.table whether you want to save a table for faster computation
+#' @param table.path file path to where table is saved; if not specified, will
+#' default ot working directory
+#' @param trace T/F for whether intermediary output is printed
 #' @keywords matrix
 #' @examples set.seed(200)
 #' library(MASS)
@@ -607,7 +616,9 @@ wc_updater_finder <- function(r, k, P, save.table = F) {
 #' mps2
 #' build.tree(mps2) #graph
 #' @export
-full.select.gen<-function(myframe,resp.name,depth,r,Pstar=0.95,f,type,model,fun.args,pred.args,condense=FALSE){
+full.select.gen<-function(myframe,resp.name,depth,r,Pstar=0.95,f,type,model,
+													fun.args,pred.args,condense=F,save.table=F,table.path=NULL,
+													trace=F){
 	####################################### input info and stops #######################################
 	if(missing(depth)) depth<-3
 	if(missing(myframe)) stop("Need data.frame")
@@ -636,7 +647,7 @@ full.select.gen<-function(myframe,resp.name,depth,r,Pstar=0.95,f,type,model,fun.
 
 	p <- length(select1)
 	desir_prob <- Pstar
-	worst_case <- wc_updater_finder(r, p, desir_prob)
+	worst_case <- wc_updater_finder(r, p, desir_prob,save.table=save.table, table.path=table.path)
 	# worst_case <- find_worstcases_chen86(r, p, desir_prob)
 	r_prime <- worst_case$r_prime
 	var1.list <- var1.list.all[which(select1 >= r_prime )]
@@ -685,7 +696,7 @@ full.select.gen<-function(myframe,resp.name,depth,r,Pstar=0.95,f,type,model,fun.
 				inner.mat.c<-inner.mat.c[!duplicated(inner.mat3),,drop=FALSE]
 				inner.mat<-inner.mat[!duplicated(inner.mat3),,drop=FALSE]
 			}
-			print(inner.mat)
+			if(trace) print(inner.mat)
 		}
 	}
 	return(inner.mat)

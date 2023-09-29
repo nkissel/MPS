@@ -15,7 +15,10 @@ full.select.gen(
   model,
   fun.args,
   pred.args,
-  condense = FALSE
+  condense = F,
+  save.table = F,
+  table.path = NULL,
+  trace = F
 )
 }
 \arguments{
@@ -40,6 +43,13 @@ full.select.gen(
 \item{pred.args}{list of arguments that are passed to model predict function}
 
 \item{condense}{logical for whether or not paths should be merged}
+
+\item{save.table}{whether you want to save a table for faster computation}
+
+\item{table.path}{file path to where table is saved; if not specified, will
+default ot working directory}
+
+\item{trace}{T/F for whether intermediary output is printed}
 }
 \description{
 Function that performs Model Path Selection (MPS)
