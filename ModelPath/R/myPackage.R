@@ -592,8 +592,7 @@ wc_updater_finder <- function(r, k, P, save.table = F, table.path = NULL) {
 #' @param pred.args list of arguments that are passed to model predict function
 #' @param condense logical for whether or not paths should be merged
 #' @param save.table whether you want to save a table for faster computation
-#' @param table.path file path to where table is saved; if not specified, will
-#' default ot working directory
+#' @param table.path file path to where table is saved; if not specified, will default to working directory
 #' @param trace T/F for whether intermediary output is printed
 #' @keywords matrix
 #' @examples set.seed(200)

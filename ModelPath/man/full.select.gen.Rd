@@ -46,8 +46,7 @@ full.select.gen(
 
 \item{save.table}{whether you want to save a table for faster computation}
 
-\item{table.path}{file path to where table is saved; if not specified, will
-default ot working directory}
+\item{table.path}{file path to where table is saved; if not specified, will default to working directory}
 
 \item{trace}{T/F for whether intermediary output is printed}
 }
