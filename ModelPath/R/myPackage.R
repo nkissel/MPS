@@ -537,13 +537,21 @@ find_worstcases_chen86 <- function(r, k, P) {
 #' @param r maximum cell count
 #' @param k number of cells
 #' @param P desired inclusion probability
+#' @param save.table whether you want to save a table for faster computation
 #' @examples find_worstcases_chen86(100, 5, 0.80)
-wc_updater_finder <- function(r, k, P) {
-	mypath <- "~/mps/speed_test/worst_case_table.Rds"
+wc_updater_finder <- function(r, k, P, save.table = F) {
+	# mypath <- "~/mps/speed_test/worst_case_table.Rds"
 	# mypath <- "/ihome/lmentch/nkissel/mps/speed_test/worst_case_table.Rds"
-	worst_cases <- readRDS(mypath)
-	where <- (worst_cases$r %in% r) & (worst_cases$k %in% k) & (worst_cases$P %in% P)
-	is_in <- sum(where)
+	if(save.table) {
+		mypath <- paste0(getwd(), '/', 'worst_case_table.Rds')
+		if(exists(mypath)) {
+			worst_cases <- readRDS(mypath)
+			where <- (worst_cases$r %in% r) & (worst_cases$k %in% k) & (worst_cases$P %in% P)
+			is_in <- sum(where)
+		}
+	} else {
+		isin <- 0
+	}
 
 	if(is_in == 1) {
 		return(list(r_prime = worst_cases$r_prime[where], P = P))
@@ -554,7 +562,7 @@ wc_updater_finder <- function(r, k, P) {
 		worst_cases[curr_rows + 1, 2] <- k
 		worst_cases[curr_rows + 1, 3] <- P
 		worst_cases[curr_rows + 1, 4] <- t$r_prime
-		saveRDS(worst_cases, file = "~/mps/speed_test/worst_case_table.Rds", version = 2)
+		if(save.table) saveRDS(worst_cases, file = mypath, version = 2)
 		return(list(r_prime = t$r_prime, P = P))
 	}
 }
