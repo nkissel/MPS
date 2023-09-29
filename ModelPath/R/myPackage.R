@@ -553,6 +553,8 @@ wc_updater_finder <- function(r, k, P, save.table = F, table.path = NULL) {
 			worst_cases <- readRDS(mypath)
 			where <- (worst_cases$r %in% r) & (worst_cases$k %in% k) & (worst_cases$P %in% P)
 			is_in <- sum(where)
+		} else {
+			is_in <- 0
 		}
 	} else {
 		isin <- 0
