@@ -559,7 +559,7 @@ wc_updater_finder <- function(r, k, P, save.table = F, table.path = NULL) {
 	} else {
 		isin <- 0
 	}
-	if(!exists(worst_cases)) {
+	if(!exists('worst_cases')) {
 		worst_cases <- data.frame(matrix(ncol = 4, nrow = 0))
 		colnames(worst_cases) <- c('r','k','P','r_prime')
 	}
@@ -574,7 +574,7 @@ wc_updater_finder <- function(r, k, P, save.table = F, table.path = NULL) {
 		worst_cases[curr_rows + 1, 2] <- k
 		worst_cases[curr_rows + 1, 3] <- P
 		worst_cases[curr_rows + 1, 4] <- t$r_prime
-		if(save.table) saveRDS(worst_cases, file = mypath, version = 2)
+		if(save.table) saveRDS(worst_cases, file = mypath)
 		return(list(r_prime = t$r_prime, P = P))
 	}
 }
