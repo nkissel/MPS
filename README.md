@@ -10,21 +10,21 @@ The "ModelPath" folder can be installed as an R package. It provides tools for p
 For an example of how to use MPS
 ```
 library(MASS)
-n<-1000
-p<-10
-x<-mvrnorm(n,rep(0,p),diag(p))
-signal<-rowSums(x[,1:3])
-noise<-rnorm(n,0,1/4)
-y<-signal+noise
-mydata<-data.frame(x,y)
-mps1<-full.select.gen(myframe=mydata,resp.name='y',depth=3,
-   r=100,model='lm',condense=FALSE)
+n <- 1000
+p <- 10
+x <- mvrnorm(n, rep(0, p), diag(p))
+signal <- rowSums(x[,1:3])
+noise <- rnorm(n, 0, 1/4)
+y <- signal + noise
+mydata <- data.frame(x, y)
+mps1 <- full.select.gen(myframe = mydata, resp.name = 'y', depth = 3,
+   r = 100, model = 'lm', condense = FALSE)
 mps1
 build.tree(mps1) #graph
 
 #merged paths
-mps2<-full.select.gen(myframe=mydata,resp.name='y',depth=3,
-   r=100,model='lm',condense=TRUE)
+mps2 <- full.select.gen(myframe = mydata, resp.name = 'y', depth = 3,
+   r = 100, model = 'lm', condense = TRUE)
 mps2
 build.tree(mps2) #graph
 ```
