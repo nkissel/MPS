@@ -1,5 +1,5 @@
 # Model Path Selection
-The "kisselmentch2021" folder contains R code to reproduce the simulations, applications, and motivation examples in our upcoming Forward Stability and Model Path Selection paper.
+The "kisselmentch2021" folder contains R code to reproduce the simulations, applications, and motivation examples in paper [Forward Stability and Model Path Selection](https://link.springer.com/article/10.1007/s11222-024-10395-8).
 
 The "ModelPath" folder can be installed as an R package. It provides tools for performing MPS.
  
