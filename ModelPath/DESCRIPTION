@@ -3,7 +3,7 @@ Type: Package
 Title: Model Path Selection
 Version: 0.1.0
 Author: Nicholas Kissel, Lucas Mentch
-Maintainer: Nicholas Kissel <nkissel@andrew.cmu.edu>
+Maintainer: Nicholas Kissel 
 Description: Package for MPS
 License: NULL
 Encoding: UTF-8
